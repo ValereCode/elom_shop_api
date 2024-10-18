@@ -16,4 +16,10 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "I'm bored!"}
+    return {
+  "key": "12345",
+  "activity": "Hiking",
+  "type": "recreational",
+  "participants": 4,
+  "price": 0.0
+}
