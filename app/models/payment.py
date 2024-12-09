@@ -1,8 +1,10 @@
 from beanie import Document
 from pydantic import Field
-from bson import ObjectId
 from datetime import datetime
 from enum import Enum
+from beanie import Link
+from .order import Order
+
 
 class PaymentMethod(str, Enum):
     CREDIT_CARD = "credit_card"
@@ -10,7 +12,7 @@ class PaymentMethod(str, Enum):
     BANK_TRANSFER = "bank_transfer"
 
 class Payment(Document):
-    order_id: ObjectId = Field(..., alias="orderId")
+    order: Link[Order]
     amount: float
     payment_date: datetime = Field(default_factory=datetime.now, alias="paymentDate")
     payment_method: PaymentMethod = Field(..., alias="paymentMethod")

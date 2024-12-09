@@ -1,12 +1,13 @@
-from beanie import Document
+from beanie import Document, Link
 from typing import List
 from pydantic import Field
-from bson import ObjectId
 from datetime import datetime
 from .cart_item import CartItem
+from .user import User
+
 
 class Cart(Document):
-    user_id: ObjectId = Field(..., alias="userId")
+    user: Link[User]
     items: List[CartItem] = []
     creation_date: datetime = Field(default_factory=datetime.now, alias="creationDate")
 

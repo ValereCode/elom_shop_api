@@ -1,13 +1,15 @@
 from beanie import Document
 from typing import Optional
 from pydantic import Field
-from bson import ObjectId
 from datetime import datetime
+from .product import Product
+from .user import User
+from beanie import Link
 
 
 class Review(Document):
-    product_id: ObjectId = Field(..., alias="productId")
-    user_id: ObjectId = Field(..., alias="userId")
+    product: Link[Product]
+    user: Link[User]
     rating: int
     comment: Optional[str] = None
     review_date: datetime = Field(default_factory=datetime.now, alias="reviewDate")

@@ -1,7 +1,8 @@
 from beanie import Document
 from typing import Optional
-from pydantic import Field
-from bson import ObjectId
+from beanie import Link
+from .category import Category
+
 
 class Product(Document):
     name: str
@@ -9,7 +10,7 @@ class Product(Document):
     price: float
     stock: int
     image: Optional[str] = None
-    category_id: ObjectId = Field(..., alias="categoryId")
+    category: Link[Category]
 
     class Settings:
         name = "products"

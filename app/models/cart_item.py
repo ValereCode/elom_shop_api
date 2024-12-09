@@ -1,7 +1,8 @@
 from pydantic import BaseModel
-from bson import ObjectId
-from pydantic import Field
+from beanie import Link
+from .product import Product
+
 
 class CartItem(BaseModel):
-    product_id: ObjectId = Field(..., alias="productId")
+    product: Link[Product]
     quantity: int

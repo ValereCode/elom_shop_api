@@ -1,10 +1,11 @@
 from beanie import Document
 from typing import List
 from pydantic import Field
-from bson import ObjectId
 from datetime import datetime
 from enum import Enum
 from .order_item import OrderItem
+from .user import User
+from beanie import Link
 
 class OrderStatus(str, Enum):
     PENDING = "pending"
@@ -14,7 +15,7 @@ class OrderStatus(str, Enum):
     CANCELLED = "cancelled"
 
 class Order(Document):
-    user_id: ObjectId = Field(..., alias="userId")
+    user: Link[User]
     items: List[OrderItem]
     order_date: datetime = Field(default_factory=datetime.now, alias="orderDate")
     status: OrderStatus = OrderStatus.PENDING
