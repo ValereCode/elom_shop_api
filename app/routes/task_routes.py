@@ -6,7 +6,7 @@ router = APIRouter(
     tags=['It will be remove later']
 )
 
-@router.get("/bored")
+@router.get("")
 async def root():
     return {
         "key": "12345",
