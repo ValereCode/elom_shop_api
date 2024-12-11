@@ -1,23 +1,21 @@
 """Authentication router."""
-
-from fastapi import APIRouter, HTTPException, status
-
+from typing import Annotated
+from fastapi import APIRouter, HTTPException, status, Form
 from app.jwt import create_access_token, create_refresh_token
 from app.models.auth import RefreshToken
 from app.models.user import User, UserAuth
 from app.utils.password import verify_password
 
 
-router = APIRouter(prefix="/auth", tags=["Auth"])
+
+router = APIRouter(prefix="/auth", tags=["Authentification"])
 
 
 @router.post("")
-async def login(user_auth: UserAuth):
+async def login(user_credentials: Annotated[UserAuth, Form()]):
     """Authenticate and returns the user's JWT."""
-    print("HIIIII")
-    user = await User.by_email(user_auth.email)
-    print(f"HIIIIIIIIIIII  {user}")
-    if user is None or verify_password(user_auth.password, user.password):
+    user = await User.by_email(user_credentials.email)
+    if user is None or not verify_password(user_credentials.password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Bad email or password")
     if user.email_confirmed_at is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is not yet verified")

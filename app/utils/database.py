@@ -20,21 +20,12 @@ load_dotenv()
 async def connect_database(app: FastAPI):
     # Create Motor client
     client = AsyncIOMotorClient(os.getenv("DATABASE_URL"))
-    # ****************************************************#
-    ping_response = await client.elom_shop.command("ping")
-    if int(ping_response["ok"]) != 1:
-        raise Exception("Problem connecting to database cluster.")
-    else:
-        print("Connected to database cluster.")
-    # ****************************************************#
     # Initialize beanie with documents classes and a database
     await init_beanie(
         database=client.elom_shop,
         document_models=[User, Product, Category, Order, Payment, Cart, Review]
     )
-    print("Startup complete")
     yield
-    print("Shutdown complete")
 
 app = FastAPI(lifespan=connect_database,docs_url="/")
 
