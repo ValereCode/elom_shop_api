@@ -1,11 +1,8 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from contextlib import asynccontextmanager
-from dotenv import  load_dotenv
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from ..models.user import User
 from ..models.cart import Cart
 from ..models.category import Category
@@ -13,13 +10,13 @@ from ..models.order import Order
 from ..models.payment import Payment
 from ..models.product import Product
 from ..models.review import Review
+from app.config import settings
 
-load_dotenv()
 
 @asynccontextmanager
 async def connect_database(app: FastAPI):
     # Create Motor client
-    client = AsyncIOMotorClient(os.getenv("DATABASE_URL"))
+    client = AsyncIOMotorClient(settings.database_url)
     # Initialize beanie with documents classes and a database
     await init_beanie(
         database=client.elom_shop,

@@ -1,9 +1,5 @@
 from .utils.database import app
-from .routes import task_routes
-from .routes import user_routes
-from .routes import product_routes
-from .routes import category_routes
-from .routes import auth_routes
+from .routes import task_routes, user_routes, product_routes, category_routes, auth_routes
 
 
 
