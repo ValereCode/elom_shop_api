@@ -19,8 +19,8 @@ async def get_category(id: PydanticObjectId):
 
 @router.get('/', response_model=Category, status_code=status.HTTP_200_OK)
 async def get_category():
-    category = await Category.fing()
-    return category
+    return await Category.find().to_list()
+
 
 @router.put('/{id}', status_code=status.HTTP_200_OK)
 async def update_category(id: PydanticObjectId, new_category: Category):

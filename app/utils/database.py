@@ -10,6 +10,7 @@ from ..models.order import Order
 from ..models.payment import Payment
 from ..models.product import Product
 from ..models.review import Review
+from ..models.task import Task
 from app.config import settings
 
 
@@ -20,7 +21,7 @@ async def connect_database(app: FastAPI):
     # Initialize beanie with documents classes and a database
     await init_beanie(
         database=client.elom_shop,
-        document_models=[User, Product, Category, Order, Payment, Cart, Review]
+        document_models=[User, Product, Category, Order, Payment, Cart, Review, Task]
     )
     yield
 
