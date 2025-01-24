@@ -8,9 +8,6 @@ from app.models.auth import TokenData
 from app.models.user import User
 
 
-
-# to get a string like this run:
-# openssl rand -hex 32
 SECRET_KEY = config.settings.secret_key
 ALGORITHM = config.settings.algorithm
 ACCESS_TOKEN_EXPIRE_MINUTES = config.settings.access_token_expire_minutes
